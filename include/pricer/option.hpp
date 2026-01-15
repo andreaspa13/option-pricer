@@ -2,7 +2,7 @@
 #include "types.hpp"
 
 namespace pricer {
-    Struct Option {
+    struct Option {
         OptionType type;
         ExerciseStyle style{ExerciseStyle::European};
         double strike{0.0}; //K Strike price
