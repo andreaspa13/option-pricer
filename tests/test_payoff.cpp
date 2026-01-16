@@ -1,7 +1,7 @@
 #include "pricer/payoff.hpp"
-#include <catch2/catch_test_macros.hpp>
+#include <gtest/gtest.h>
 
-TEST_CASE("Call option payoff") {
+TEST(PayoffTests, CallPayoff) {
   pricer::Option call{
     pricer::OptionType::Call,
     pricer::ExerciseStyle::European,
@@ -9,12 +9,12 @@ TEST_CASE("Call option payoff") {
     1.0
   };
 
-  REQUIRE(pricer::payoff(call, 120.0) == 20.0);
-  REQUIRE(pricer::payoff(call, 100.0) == 0.0);
-  REQUIRE(pricer::payoff(call, 80.0)  == 0.0);
+  EXPECT_EQ(pricer::payoff(call, 120.0), 20.0);
+  EXPECT_EQ(pricer::payoff(call, 100.0), 0.0);
+  EXPECT_EQ(pricer::payoff(call, 80.0),  0.0);
 }
 
-TEST_CASE("Put option payoff") {
+TEST(PayoffTests, PutPayoff) {
   pricer::Option put{
     pricer::OptionType::Put,
     pricer::ExerciseStyle::European,
@@ -22,12 +22,12 @@ TEST_CASE("Put option payoff") {
     1.0
   };
 
-  REQUIRE(pricer::payoff(put, 80.0)  == 20.0);
-  REQUIRE(pricer::payoff(put, 100.0) == 0.0);
-  REQUIRE(pricer::payoff(put, 120.0) == 0.0);
+  EXPECT_EQ(pricer::payoff(put, 80.0),  20.0);
+  EXPECT_EQ(pricer::payoff(put, 100.0), 0.0);
+  EXPECT_EQ(pricer::payoff(put, 120.0), 0.0);
 }
 
-TEST_CASE("Invalid inputs throw exceptions") {
+TEST(PayoffTests, InvalidInputsThrow) {
   pricer::Option call{
     pricer::OptionType::Call,
     pricer::ExerciseStyle::European,
@@ -35,5 +35,5 @@ TEST_CASE("Invalid inputs throw exceptions") {
     1.0
   };
 
-  REQUIRE_THROWS(pricer::payoff(call, -1.0));
+  EXPECT_THROW(pricer::payoff(call, -1.0), std::invalid_argument);
 }

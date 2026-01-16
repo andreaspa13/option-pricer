@@ -10,12 +10,17 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include(FetchContent)
 
+# GoogleTest
 FetchContent_Declare(
-  Catch2
-  GIT_REPOSITORY https://github.com/catchorg/Catch2.git
-  GIT_TAG v3.6.0
+  googletest
+  GIT_REPOSITORY https://github.com/google/googletest.git
+  GIT_TAG v1.14.0
 )
-FetchContent_MakeAvailable(Catch2)
+
+# Prevent GoogleTest from overriding our compiler/linker settings on Windows
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+
+FetchContent_MakeAvailable(googletest)
 
 add_library(pricer
   src/payoff.cpp
@@ -25,7 +30,7 @@ target_include_directories(pricer PUBLIC include)
 add_executable(tests
   tests/test_payoff.cpp
 )
-target_link_libraries(tests PRIVATE pricer Catch2::Catch2WithMain)
+target_link_libraries(tests PRIVATE pricer GTest::gtest_main)
 
 include(CTest)
 add_test(NAME payoff_tests COMMAND tests)
