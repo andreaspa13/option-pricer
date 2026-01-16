@@ -34,3 +34,8 @@ target_link_libraries(tests PRIVATE pricer GTest::gtest_main)
 
 include(CTest)
 add_test(NAME payoff_tests COMMAND tests)
+
+add_executable(payoff_demo
+  examples/payoff_demo.cpp
+)
+target_link_libraries(payoff_demo PRIVATE pricer)
