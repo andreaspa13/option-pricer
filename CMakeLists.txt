@@ -25,17 +25,19 @@ FetchContent_MakeAvailable(googletest)
 add_library(pricer
   src/payoff.cpp
   src/black_scholes.cpp
-
 )
 target_include_directories(pricer PUBLIC include)
 
 add_executable(tests
   tests/test_payoff.cpp
+  tests/test_black_scholes.cpp
 )
 target_link_libraries(tests PRIVATE pricer GTest::gtest_main)
 
 include(CTest)
-add_test(NAME payoff_tests COMMAND tests)
+
+include(GoogleTest)
+gtest_discover_tests(tests)
 
 add_executable(payoff_demo
   examples/payoff_demo.cpp
