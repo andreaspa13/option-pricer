@@ -24,6 +24,8 @@ FetchContent_MakeAvailable(googletest)
 
 add_library(pricer
   src/payoff.cpp
+  src/black_scholes.cpp
+
 )
 target_include_directories(pricer PUBLIC include)
 
