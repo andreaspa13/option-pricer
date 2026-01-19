@@ -32,7 +32,9 @@ target_include_directories(pricer PUBLIC include)
 add_executable(tests
   tests/test_payoff.cpp
   tests/test_black_scholes.cpp
+  tests/test_greeks.cpp
 )
+
 target_link_libraries(tests PRIVATE pricer GTest::gtest_main)
 
 include(CTest)
